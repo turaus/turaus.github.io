@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage[UTF8]{ctex}
+\usepackage{xcolor}
+
+% 设置注释在代码上方
+\SetCommentSty{\small\ttfamily}
+\SetKwComment{tcc}{// }{}
+
+\begin{document}
+
+% 主算法 OPTICS
+\begin{algorithm}[H]
+\SetAlgoLined
+\DontPrintSemicolon
+\SetKwFunction{OPTICS}{OPTICS}
+\SetKwFunction{Update}{update}
+\SetKwFunction{getCorePoints}{getCorePoints}
+\SetKwFunction{computeCoreDists}{computeCoreDists}
+\SetKwFunction{getNeighbors}{getNeighbors}
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+
+\caption{OPTICS}
+\Input{DB, $\epsilon$, MinPts}
+\Output{orderedlist}
+\BlankLine
+\tcc{获得数据集中的所有核心点}
+core\_points = getCorePoints(DB, $\epsilon$, MinPts) \;
+\tcc{计算每个点的核心距离}
+core\_dists = computeCoreDists(DB, $\epsilon$, MinPts) \;
+\ForEach{unprocessed point $p$ of core\_points}{
+    N = getNeighbors(p, $\epsilon$) \;
+    mark p as processed \;
+    output p to the orderedlist \;
+    \If{\mid N \mid > MinPts}{
+        Seeds = empty priority queue \;
+        update(N, p, Seeds, core\_dists) \;
+        \While{Seeds is not empty}{
+            q = Seeds.pop() \;
+            N' = getNeighbors(q, $\epsilon$) \;
+            mark q as processed \;
+            output q to the orderedlist \;
+            \If{\mid N'\mid > MinPts}{
+                update(N', q, Seeds, core\_dists) \;
+            }
+        }
+    }
+}
+\Return{orderedlist} \;
+\end{algorithm}
+
+% update 函数
+\begin{algorithm}[H]
+\SetAlgoLined
+\DontPrintSemicolon
+\SetKwFunction{Update}{update}
+\SetKwInOut{Input}{input}
+
+\caption{update}
+\Input{N, p, Seeds, core\_dists}
+\BlankLine
+\tcc{获得p点的核心距离}
+coredist = core\_dists[p] \;
+\ForEach{o in N}{
+    \tcc{如果o没有被处理}
+    \If{o is not processed}{
+        \tcc{计算p相对于o的可达距离}
+        new-reach-dist = max(coredist, dist(p,o)) \;
+        \tcc{如果o没有还没定义可达距离}
+        \If{o.reachability-distance == UNDEFINED}{
+            \tcc{给o赋可达距离}
+            o.reachability-distance = new-reach-dist \;
+            \tcc{同时将o插入到种子序列中（根据可达距离排序）}
+            Seeds.insert(o, new-reach-dist) \;
+        }
+        \Else{
+            \tcc{如果o已经定义了可达距离，判断是否更新的可达距离}
+            \If{new-reach-dist < o.reachability-distance}{
+                o.reachability-distance = new-reach-dist \;
+                Seeds.move-up(o, new-reach-dist) \;
+            }
+        }
+    }
+}
+\end{algorithm}
+
+\end{document}

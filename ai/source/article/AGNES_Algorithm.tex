@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage[UTF8]{ctex}
+\usepackage{xcolor}
+
+% 修正 tcc 命令以兼容中文
+\makeatletter
+\renewcommand{\tcc}[1]{\Statex \texttt{//} #1}
+\makeatother
+
+\begin{document}
+
+% AGNES 算法
+\begin{algorithm}[H]
+\SetAlgoLined
+\DontPrintSemicolon
+\SetKwFunction{AGNES}{AGNES}
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+
+\caption{AGNES}
+\Input{$D = \{x_i\}_{i=1}^{m}$, d, k}
+\Output{$\mathcal{C} = \{C_1, C_2, \dots, C_k\}$}
+\BlankLine
+\texttt{// 初始化单样本聚类簇} \\
+\For{$j = 1,2,\cdots,m$}{
+    $\mathcal{C} = \{x_j\}$ \;
+}
+\texttt{// 初始化聚类簇距离矩阵} \\
+\For{$i = 1,2,\cdots,m$}{
+    \For{$j = 1,2,\cdots,m$}{
+        \texttt{// 这里的d通常使用 $d_{\min}$，$d_{\max}$，$d_{\text{avg}}$ } \\
+        $M(i,j) = d (C_i, C_j)$ \;
+        $M(j,i) = M(i,j)$ \;
+    }
+}
+\texttt{// 设置当前聚类簇的个数 q} \\
+q = m \;
+\While{ $q > k$}{
+    找出距离最近的两个聚类簇 $C_{i^*}$ 和 $C_{j^*}$ \;
+    \texttt{// 合并} $C_{i^*}$ 和 $C_{j^*}$ \\
+    $C_{i^*} = C_{i^*} \cup C_{j^*}$ \;
+    \For{$j = j^* +1, j^* + 2, \cdots, q$}{
+        $C_j = C_{j-1}$ \;
+    }
+    \texttt{// 删除距离矩阵 $M$ 的第 $j^*$ 行与第 $i^*$列} \\
+    \For{$j = 1,2,\cdots,q-1$}{
+        $M(i^*,j) = d (C_{i^*}, C_j)$ \;
+        $M(j,i^*) = M(i^*,j)$ \;
+    }
+    $q = q-1$
+    }
+\textbf{return} 簇划分$\mathcal{C} = \{C_1,C_2,\cdots,C_k\}$ \;  % 修正 return 命令
+\end{algorithm}
+
+\end{document}
