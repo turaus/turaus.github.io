@@ -1,0 +1,371 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* 水下机器人模块配色 - 深蓝海洋色系 */
+    --underwater-primary: #006994;
+    --underwater-secondary: #0077B6;
+    --underwater-accent: #00B4D8;
+    --underwater-bg: #E3F2FD;
+
+    /* 人工智能模块配色 - 科技紫色系 */
+    --ai-primary: #6B5B95;
+    --ai-secondary: #8B7BB5;
+    --ai-accent: #A78BFA;
+    --ai-bg: #F3E5F5;
+
+    /* 海洋机器人操纵与控制模块配色 - 海洋绿色系 */
+    --marine-primary: #2E7D32;
+    --marine-secondary: #43A047;
+    --marine-accent: #66BB6A;
+    --marine-bg: #E8F5E9;
+
+    /* 导航栏配色 */
+    --sidebar-bg: #1a1a2e;
+    --sidebar-text: #eaeaea;
+    --sidebar-hover: #16213e;
+
+    /* 通用颜色 */
+    --text-primary: #2d3436;
+    --text-secondary: #636e72;
+    --bg-light: #f8f9fa;
+    --white: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--bg-light);
+}
+
+/* ========== 侧边栏样式 ========== */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(180deg, var(--sidebar-bg) 0%, #0f3460 100%);
+    color: var(--sidebar-text);
+    padding: 2rem 1.5rem;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 2px 0 10px var(--shadow);
+}
+
+.sidebar-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.nav-menu {
+    list-style: none;
+}
+
+.nav-menu li {
+    margin-bottom: 0.5rem;
+}
+
+.nav-link {
+    display: block;
+    padding: 0.8rem 1rem;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.nav-link:hover {
+    background-color: var(--sidebar-hover);
+    transform: translateX(5px);
+}
+
+.nav-link.active {
+    background: linear-gradient(90deg, var(--underwater-primary), var(--underwater-accent));
+    font-weight: 500;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 2rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+
+/* ========== 移动端菜单按钮 ========== */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1100;
+    background-color: var(--underwater-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 2px 10px var(--shadow);
+}
+
+/* ========== 主内容区域 ========== */
+.main-content {
+    margin-left: 280px;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+/* ========== 欢迎区域 ========== */
+.welcome-section {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    margin-bottom: 3rem;
+    color: white;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.welcome-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.intro {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* ========== 模块样式 ========== */
+.module {
+    margin-bottom: 3rem;
+    padding: 2.5rem;
+    border-radius: 16px;
+    background: var(--white);
+    box-shadow: 0 4px 20px var(--shadow);
+    transition: transform 0.3s ease;
+}
+
+.module:hover {
+    transform: translateY(-5px);
+}
+
+.module-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.module-icon {
+    font-size: 3rem;
+    margin-right: 1rem;
+}
+
+.module-header h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.module-desc {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+/* ========== 水下机器人模块配色 ========== */
+.underwater-nav-module {
+    background: linear-gradient(135deg, var(--underwater-bg) 0%, white 50%);
+    border-left: 5px solid var(--underwater-primary);
+}
+
+.underwater-nav-module h2 {
+    color: var(--underwater-primary);
+}
+
+.underwater-nav-module .card:hover {
+    border-color: var(--underwater-primary);
+    box-shadow: 0 8px 25px rgba(0, 105, 148, 0.2);
+}
+
+/* ========== 人工智能模块配色 ========== */
+.ai-module {
+    background: linear-gradient(135deg, var(--ai-bg) 0%, white 50%);
+    border-left: 5px solid var(--ai-primary);
+}
+
+.ai-module h2 {
+    color: var(--ai-primary);
+}
+
+.ai-module .card:hover {
+    border-color: var(--ai-primary);
+    box-shadow: 0 8px 25px rgba(107, 91, 149, 0.2);
+}
+
+/* ========== 海洋机器人模块配色 ========== */
+.marine-control-module {
+    background: linear-gradient(135deg, var(--marine-bg) 0%, white 50%);
+    border-left: 5px solid var(--marine-primary);
+}
+
+.marine-control-module h2 {
+    color: var(--marine-primary);
+}
+
+.marine-control-module .card:hover {
+    border-color: var(--marine-primary);
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.2);
+}
+
+/* ========== 卡片网格 ========== */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    display: block;
+    padding: 1.5rem;
+    background: var(--white);
+    border-radius: 12px;
+    border: 2px solid transparent;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px var(--shadow);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--underwater-primary);
+    box-shadow: 0 8px 25px var(--shadow);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+/* ========== 页脚 ========== */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    margin-top: 3rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* ========== 响应式设计 ========== */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+        padding-top: 4rem;
+    }
+
+    .welcome-section {
+        padding: 2rem 1rem;
+    }
+
+    .welcome-section h1 {
+        font-size: 1.8rem;
+    }
+
+    .intro {
+        font-size: 1rem;
+    }
+
+    .module {
+        padding: 1.5rem;
+    }
+
+    .module-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 260px;
+    }
+
+    .module-icon {
+        font-size: 2.5rem;
+    }
+}
+
+/* ========== 滚动条美化 ========== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

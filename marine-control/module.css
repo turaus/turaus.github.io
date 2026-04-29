@@ -1,0 +1,194 @@
+/* 海洋机器人模块专用样式 - 绿色系配色 */
+
+/* 面包屑导航 */
+.breadcrumb {
+    font-size: 0.9rem;
+    color: #636e72;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+    color: #2E7D32;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: #43A047;
+    text-decoration: underline;
+}
+
+/* 页面头部 */
+.page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #E8F5E9;
+}
+
+.page-header h1 {
+    font-size: 2.2rem;
+    color: #2E7D32;
+    margin-bottom: 0.5rem;
+}
+
+/* 内容区域 */
+.content-page {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+    margin-bottom: 2.5rem;
+}
+
+.section h2 {
+    font-size: 1.6rem;
+    color: #2E7D32;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #E8F5E9;
+}
+
+.section h3 {
+    font-size: 1.3rem;
+    color: #43A047;
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.section p {
+    line-height: 1.8;
+    color: #2d3436;
+    margin-bottom: 1rem;
+}
+
+.section ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.section li {
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+    color: #2d3436;
+}
+
+/* 概念卡片网格 */
+.concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.concept-card {
+    background: linear-gradient(135deg, #E8F5E9 0%, white 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid #2E7D32;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.concept-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.15);
+}
+
+.concept-card h3 {
+    font-size: 1.1rem;
+    color: #2E7D32;
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+}
+
+.concept-card p {
+    font-size: 0.95rem;
+    color: #636e72;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* 提示框 */
+.note-box {
+    background: linear-gradient(135deg, #E8F5E9 0%, white 100%);
+    border-left: 4px solid #2E7D32;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+.note-box h4 {
+    color: #2E7D32;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.note-box p {
+    color: #43A047;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* 数学公式块 */
+.math-block {
+    background: #f8f9fa;
+    border-left: 4px solid #66BB6A;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.math-block code {
+    font-size: 1.1rem;
+    color: #2E7D32;
+    background: transparent;
+    font-weight: 600;
+}
+
+.math-block p {
+    margin-top: 0.5rem;
+    color: #636e72;
+}
+
+/* 参考资料列表 */
+.reference-list {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    list-style-type: none;
+    margin-left: 0 !important;
+}
+
+.reference-list li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.reference-list li:before {
+    content: "📚";
+    position: absolute;
+    left: 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .content-page {
+        padding: 1.5rem;
+    }
+
+    .page-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .section h2 {
+        font-size: 1.4rem;
+    }
+
+    .concept-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习笔记</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 左侧导航栏 -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>📚 学习笔记</h2>
+            <p class="subtitle">个人知识库</p>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#home" class="nav-link active">🏠 首页</a></li>
+            <li><a href="#underwater-nav" class="nav-link">🤖 水下机器人导航基础</a></li>
+            <li><a href="#ai" class="nav-link">🧠 人工智能</a></li>
+            <li><a href="#marine-control" class="nav-link">🚢 海洋机器人操纵与控制</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>© 2024 个人学习笔记</p>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单按钮 -->
+    <button class="menu-toggle" id="menuToggle">☰</button>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 首页欢迎区 -->
+        <section id="home" class="welcome-section">
+            <h1>欢迎来到我的学习笔记</h1>
+            <p class="intro">这里是记录我学习旅程的知识库，包含了水下机器人、人工智能等领域的学习笔记和心得体会。</p>
+        </section>
+
+        <!-- 水下机器人导航基础模块 -->
+        <section id="underwater-nav" class="module underwater-nav-module">
+            <div class="module-header">
+                <div class="module-icon">🤖</div>
+                <h2>水下机器人导航基础</h2>
+            </div>
+            <p class="module-desc">探索水下机器人导航的核心概念、算法与应用</p>
+            <div class="card-grid">
+                <a href="underwater-nav/introduction.html" class="card">
+                    <div class="card-icon">📖</div>
+                    <h3>导航基础概念</h3>
+                    <p>了解水下导航的基本原理和核心概念</p>
+                </a>
+                <a href="underwater-nav/sensors.html" class="card">
+                    <div class="card-icon">📡</div>
+                    <h3>传感器与设备</h3>
+                    <p>DVL、声纳、惯性导航系统等关键设备</p>
+                </a>
+                <a href="underwater-nav/algorithms.html" class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>导航算法</h3>
+                    <p>卡尔曼滤波、SLAM等导航算法详解</p>
+                </a>
+                <a href="underwater-nav/applications.html" class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>实际应用</h3>
+                    <p>水下导航在海洋探测中的应用案例</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- 人工智能模块 -->
+        <section id="ai" class="module ai-module">
+            <div class="module-header">
+                <div class="module-icon">🧠</div>
+                <h2>人工智能</h2>
+            </div>
+            <p class="module-desc">从基础理论到前沿技术的AI学习之旅</p>
+            <div class="card-grid">
+                <a href="ai/ml-basics.html" class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>机器学习基础</h3>
+                    <p>监督学习、无监督学习与强化学习</p>
+                </a>
+                <a href="ai/deep-learning.html" class="card">
+                    <div class="card-icon">🔮</div>
+                    <h3>深度学习</h3>
+                    <p>神经网络、CNN、RNN与Transformer</p>
+                </a>
+                <a href="ai/computer-vision.html" class="card">
+                    <div class="card-icon">👁️</div>
+                    <h3>计算机视觉</h3>
+                    <p>图像识别、目标检测与语义分割</p>
+                </a>
+                <a href="ai/nlp.html" class="card">
+                    <div class="card-icon">💬</div>
+                    <h3>自然语言处理</h3>
+                    <p>NLP核心技术与大语言模型</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- 海洋机器人操纵与控制模块 -->
+        <section id="marine-control" class="module marine-control-module">
+            <div class="module-header">
+                <div class="module-icon">🚢</div>
+                <h2>海洋机器人操纵与控制</h2>
+            </div>
+            <p class="module-desc">海洋机器人的运动控制与智能决策</p>
+            <div class="card-grid">
+                <a href="marine-control/kinematics.html" class="card">
+                    <div class="card-icon">📐</div>
+                    <h3>运动学建模</h3>
+                    <p>坐标系统与运动学方程推导</p>
+                </a>
+                <a href="marine-control/dynamics.html" class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>动力学分析</h3>
+                    <p>水动力系数与动力学方程</p>
+                </a>
+                <a href="marine-control/control.html" class="card">
+                    <div class="card-icon">🎮</div>
+                    <h3>控制策略</h3>
+                    <p>PID控制、自适应控制与鲁棒控制</p>
+                </a>
+                <a href="marine-control/path-planning.html" class="card">
+                    <div class="card-icon">🗺️</div>
+                    <h3>路径规划</h3>
+                    <p>A*算法、RRT与轨迹优化</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>📝 持续更新中 | 记录学习的每一步</p>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
