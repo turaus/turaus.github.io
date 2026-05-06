@@ -232,16 +232,16 @@ body {
 }
 
 /* ========== 海洋机器人模块配色 ========== */
-.marine-control-module {
+.marine-env-module {
     background: linear-gradient(135deg, var(--marine-bg) 0%, white 50%);
     border-left: 5px solid var(--marine-primary);
 }
 
-.marine-control-module h2 {
+.marine-env-module h2 {
     color: var(--marine-primary);
 }
 
-.marine-control-module .card:hover {
+.marine-env-module .card:hover {
     border-color: var(--marine-primary);
     box-shadow: 0 8px 25px rgba(46, 125, 50, 0.2);
 }
