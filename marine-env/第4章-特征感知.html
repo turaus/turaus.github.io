@@ -430,7 +430,7 @@
         <section id="intro" class="card">
             <h2>1. 传感器特征分析</h2>
             <p>传感器特征分析主要指根据海洋机器人获取的传感器数据，<strong>选择其中感兴趣的部分信息</strong>并<strong>分析其不同特性</strong>，通过某种形式<strong>描述其关键特性</strong>，并对这种<strong>表达形式的有效性</strong>进行评价。</p>
-            <img src="./sourceimgs/第4章 特征感知/image-20260506134211505.png" alt="传感器特征分析示意图" style="zoom:50%;">
+            <img src="./source/imgs/第4章 特征感知/image-20260506134211505.png" alt="传感器特征分析示意图" style="zoom:50%;">
         </section>
 
         <!-- 1.1 目标候选区域的确定 -->
@@ -461,7 +461,7 @@
 
             <h4>① 使用模板检测孤立点</h4>
             <p>计算某像素与周边相邻点之间的差值，并加权叠加（模板运算）得到 \(R\) ，由于模板系数和为0，故对均匀区域的响应为 0 或接近于 0，所以可以通过设定一个阈值 \(T\) 来判断是否为一个孤立点（\(R \ge T\)）。例如：</p>
-            <img src="./sourceimgs/第4章 特征感知/image-20260507143732906.png" alt="孤立点检测模板示例">
+            <img src="./source/imgs/第4章 特征感知/image-20260507143732906.png" alt="孤立点检测模板示例">
 
             <h4>② Harris 角点检测</h4>
             <p>定义窗口平移 \((\Delta x, \Delta y)\) 后的灰度变化：</p>
@@ -515,7 +515,7 @@
             \]
             <p>\(\det(M) = \lambda_1 \lambda_2\)，\(\operatorname{trace}(M) = \lambda_1 + \lambda_2\)。</p>
             <p>对 \(R\) 进行非极大值抑制，局部最大值即为角点。</p>
-            <img src="./sourceimgs/第4章 特征感知/image-20260507144942034.png" alt="Harris角点检测示例图" style="zoom:15%;">
+            <img src="./source/imgs/第4章 特征感知/image-20260507144942034.png" alt="Harris角点检测示例图" style="zoom:15%;">
 
             <pre><code class="language-python">import cv2
 import numpy as np
@@ -540,7 +540,7 @@ cv2.waitKey(0)
             <h4>③ FAST 角点检测</h4>
             <p>Features from Accelerated Segment Test 是一种非常简单快速的角点检测算法，角点定义为在像素点的周围邻域内有足够多的像素点的灰度值大于或者小于该点的灰度值。（非常直觉化，完全避开梯度计算）</p>
             <p>以候选点 \(p\) 为中心，考察半径为3的离散圆周上的16个像素。若存在连续12个像素的灰度值与 \(p\) 点的灰度值差超过阈值，则判定为角点。计算速度极快，常用于实时系统。</p>
-            <img src="./sourceimgs/第4章 特征感知/image-20260507145454780.png" alt="FAST角点检测示意图" style="zoom:50%;">
+            <img src="./source/imgs/第4章 特征感知/image-20260507145454780.png" alt="FAST角点检测示意图" style="zoom:50%;">
 
             <h4>④ SUSAN 角点检测</h4>
             <div class="callout note">
@@ -580,7 +580,7 @@ cv2.waitKey(0)
             <h3 id="edge-detection">1.2.2 边缘检测</h3>
             <p>边缘是一组相连的像素，位于两个不同区域的边界上。检测基于灰度的一阶或二阶导数（对噪声非常敏感，采用滤波的方法对含噪声的图像进行平滑能改善边缘检测的性能）。</p>
             <p>特定的模板可以检测<strong>特定方向的边缘</strong>，因此可以通过比较多个典型模板的计算值来确定一个像素点是否在某个特定的边缘上。</p>
-            <img src="./sourceimgs/第4章 特征感知/image-20260507151810730.png" alt="边缘模板示例" style="zoom:50%;">
+            <img src="./source/imgs/第4章 特征感知/image-20260507151810730.png" alt="边缘模板示例" style="zoom:50%;">
 
             <h4>① 梯度算子</h4>
             <p>梯度向量：</p>
@@ -779,7 +779,7 @@ cv2.waitKey(0)
                 <li><strong>特征提取</strong>：通过<strong>数学变换</strong>将原始 \(L\) 维度量值映射为 \(m\) 维新特征（\(m < L\)），如投影、变换。</li>
                 <li><strong>特征选择</strong>：从原始 \(L\) 个特征中挑选出最具分类能力的 \(m\) 个子集。</li>
             </ul>
-            <img src="./sourceimgs/第4章 特征感知/image-20260507161215129.png" alt="特征提取与选择示意图" style="zoom:67%;">
+            <img src="./source/imgs/第4章 特征感知/image-20260507161215129.png" alt="特征提取与选择示意图" style="zoom:67%;">
 
             <!-- 1.4.2 特征指标 -->
             <h3 id="feature-metrics">1.4.2 特征指标</h3>
@@ -793,7 +793,7 @@ cv2.waitKey(0)
             </ul>
 
             <h4>2. 类别可分性测度</h4>
-            <img src="./sourceimgs/第4章 特征感知/image-20260507161646899.png" alt="类别可分性测度示意图" style="zoom:67%;">
+            <img src="./source/imgs/第4章 特征感知/image-20260507161646899.png" alt="类别可分性测度示意图" style="zoom:67%;">
 
             <p><strong>① 类内距离</strong></p>
             <p>同一类模式点集 \(\mathbf X \in \mathbb R^{m\times n}\) 内，各样本间的均方距离的期望：</p>
