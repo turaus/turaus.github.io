@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海洋机器人特征感知技术 · 传感器特征分析</title>
+    <!-- Mermaid 思维导图 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <!-- MathJax 渲染 LaTeX 公式为 SVG -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ],
+                displayMath: [
+                    ['$$', '$$'],
+                    ['\\[', '\\]']
+                ]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <style>
+        :root {
+            --primary: #0b3d5f;
+            --primary-light: #145a7a;
+            --accent: #e67e22;
+            --accent-light: #f39c12;
+            --bg: #f4f7fb;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-light: #5d6d7e;
+            --border: #dce4ec;
+            --sidebar-width: 270px;
+            --radius: 10px;
+            --shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ---- 侧边导航 ---- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, #0a3144 0%, #0b3d5f 100%);
+            color: #ecf0f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2rem 1rem 2rem 1.5rem;
+            z-index: 10;
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+            transition: transform var(--transition);
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.6rem;
+        }
+
+        .sidebar .nav-list {
+            list-style: none;
+        }
+
+        .sidebar .nav-list li {
+            margin-bottom: 0.2rem;
+        }
+
+        .sidebar .nav-list a {
+            display: block;
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 0.4rem 0.7rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar .nav-list a:hover,
+        .sidebar .nav-list a.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border-left-color: var(--accent);
+        }
+
+        .sidebar .nav-list .sub-item {
+            padding-left: 1.6rem;
+            font-size: 0.83rem;
+            opacity: 0.9;
+        }
+
+        .sidebar .nav-list .sub-sub-item {
+            padding-left: 2.4rem;
+            font-size: 0.78rem;
+            opacity: 0.85;
+        }
+
+        /* 移动端菜单按钮 */
+        .mobile-nav-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 0.9rem;
+            z-index: 30;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 2rem 2.5rem;
+            max-width: 1150px;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.3rem;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .header .subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-top: 0.2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.8rem 2rem;
+            margin-bottom: 1.8rem;
+            border: 1px solid var(--border);
+            transition: box-shadow var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+        }
+
+        .card h2 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            border-left: 5px solid var(--accent);
+            padding-left: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin: 1.8rem 0 0.4rem 0;
+            font-weight: 600;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 0.2rem;
+        }
+
+        .card h4 {
+            font-weight: 600;
+            margin: 1.4rem 0 0.3rem;
+            color: #34495e;
+            font-size: 1.1rem;
+        }
+
+        .card p {
+            margin-bottom: 0.8rem;
+        }
+
+        .math-block {
+            background: #f8fafc;
+            border-left: 3px solid var(--accent);
+            padding: 0.8rem 1.2rem;
+            font-family: 'Courier New', 'Consolas', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.15rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 0.4rem;
+            vertical-align: middle;
+            text-transform: uppercase;
+        }
+
+        /* 思维导图容器 */
+        .mindmap-container {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .mindmap-container h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        /* 提示框样式 (基于 Markdown callout) */
+        .callout {
+            border-left: 4px solid #3498db;
+            background: #eaf2f8;
+            padding: 1rem 1.2rem;
+            margin: 1.2rem 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .callout.tip {
+            border-left-color: #27ae60;
+            background: #eafaf1;
+        }
+
+        .callout.note {
+            border-left-color: #2980b9;
+            background: #eaf2f8;
+        }
+
+        .callout.warning {
+            border-left-color: #e67e22;
+            background: #fdf2e9;
+        }
+
+        .callout strong:first-child {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #f2f6fa;
+            font-weight: 600;
+        }
+
+        /* 代码块 */
+        pre {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background: #ecf0f1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin: 0.8rem 0;
+        }
+
+        /* 响应式 */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 20;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1.2rem;
+            }
+
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 移动端菜单按钮 -->
+    <button class="mobile-nav-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰ 导航</button>
+
+    <!-- 侧边导航栏 -->
+    <nav class="sidebar">
+        <h2>🌊 传感器特征分析</h2>
+        <ul class="nav-list">
+            <li><a href="#intro">1. 传感器特征分析</a></li>
+            <li><a href="#candidate" class="sub-item">1.1 目标候选区域确定</a></li>
+            <li><a href="#segmentation" class="sub-item">1.2 基于图像分割的方法</a></li>
+            <li><a href="#isolated-points" class="sub-sub-item">1.2.1 孤立点与角点</a></li>
+            <li><a href="#edge-detection" class="sub-sub-item">1.2.2 边缘检测</a></li>
+            <li><a href="#region-seg" class="sub-sub-item">1.2.3 区域分割</a></li>
+            <li><a href="#region-analysis" class="sub-item">1.3 基于区域分析的方法</a></li>
+            <li><a href="#feature-analysis" class="sub-item">1.4 目标特征分析方法</a></li>
+            <li><a href="#extraction-vs-selection" class="sub-sub-item">1.4.1 特征提取与选择</a></li>
+            <li><a href="#feature-metrics" class="sub-sub-item">1.4.2 特征指标</a></li>
+            <li><a href="#intra-class-transform" class="sub-sub-item">1.4.3 类内散布矩阵提取</a></li>
+        </ul>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+        <div class="header">
+            <h1>📡 海洋机器人特征感知技术</h1>
+            <div class="subtitle">第四章 · 传感器特征分析（详细梳理与补充）</div>
+        </div>
+
+        <!-- 思维导图 -->
+        <div class="mindmap-container">
+            <h2>🧠 传感器特征分析 · 知识结构</h2>
+            <div class="mermaid">
+                mindmap
+                root((传感器特征分析))
+                目标候选区域确定
+                基于图像分割
+                孤立点与角点
+                Harris
+                FAST
+                SUSAN
+                边缘检测
+                梯度算子
+                Laplacian/LoG
+                Canny
+                Hough变换
+                区域分割
+                阈值化 Otsu
+                分水岭分割
+                空间聚类
+                基于区域分析
+                区域生长
+                分裂与合并
+                超像素 SLIC
+                目标特征分析方法
+                特征提取 vs 特征选择
+                特征指标
+                向量相关性
+                类别可分性测度
+                类内距离/散布
+                类间距离/散布
+                多类散布矩阵
+                基于类内散布矩阵降维
+            </div>
+        </div>
+
+        <!-- 1. 传感器特征分析 -->
+        <section id="intro" class="card">
+            <h2>1. 传感器特征分析</h2>
+            <p>传感器特征分析主要指根据海洋机器人获取的传感器数据，<strong>选择其中感兴趣的部分信息</strong>并<strong>分析其不同特性</strong>，通过某种形式<strong>描述其关键特性</strong>，并对这种<strong>表达形式的有效性</strong>进行评价。</p>
+            <img src="./sourceimgs/第4章 特征感知/image-20260506134211505.png" alt="传感器特征分析示意图" style="zoom:50%;">
+        </section>
+
+        <!-- 1.1 目标候选区域的确定 -->
+        <section id="candidate" class="card">
+            <h2>1.1 目标候选区域的确定</h2>
+            <p>目标候选区域是指图像中<strong>可能包含目标</strong>的位置和范围。常用方法是<strong>图像分割</strong>，还有一种方法是<strong>基于区域分析的方法</strong>。</p>
+        </section>
+
+        <!-- 1.2 基于图像分割的方法 -->
+        <section id="segmentation" class="card">
+            <h2>1.2 基于图像分割的方法</h2>
+            <p>主要基于像素值的不连续性（边缘）和相似性（区域），有选择性地提取感兴趣的目标在图像中的位置和范围，把图像分解成构成它的各具特性的子区域和对象的过程。</p>
+            <p>将图像区域 \(R\) 分成 \(N\) 个非空子集 \(R_i\)（\(R_i\) 是连通的区域），满足：</p>
+            \[
+            R = \bigcup_{i=1}^N R_i\ ,\ i = 1,2,\cdots N\\
+            R_i \cap R_j = \emptyset \quad (i\neq j)
+            \]
+            <p>图像分割的基本思路为：</p>
+            <ol>
+                <li><strong>控制背景环境</strong>：降低分割难度（例如固定光照、背景颜色）。</li>
+                <li><strong>增强感兴趣对象</strong>：通过滤波、增强等操作突出目标。</li>
+                <li><strong>检测不连续性</strong>：找到点、线、边缘，然后确定区域。</li>
+                <li><strong>检测相似性</strong>：找到灰度/纹理相似的像素群，外轮廓即为边缘。</li>
+            </ol>
+
+            <!-- 1.2.1 孤立点与角点检测 -->
+            <h3 id="isolated-points">1.2.1 孤立点与角点检测</h3>
+
+            <h4>① 使用模板检测孤立点</h4>
+            <p>计算某像素与周边相邻点之间的差值，并加权叠加（模板运算）得到 \(R\) ，由于模板系数和为0，故对均匀区域的响应为 0 或接近于 0，所以可以通过设定一个阈值 \(T\) 来判断是否为一个孤立点（\(R \ge T\)）。例如：</p>
+            <img src="./sourceimgs/第4章 特征感知/image-20260507143732906.png" alt="孤立点检测模板示例">
+
+            <h4>② Harris 角点检测</h4>
+            <p>定义窗口平移 \((\Delta x, \Delta y)\) 后的灰度变化：</p>
+            \[
+            E(\Delta x, \Delta y) = \sum_{(u,v) \in \Omega} w(u,v) \left[ I(u,v) - I(u+\Delta x, v+\Delta y) \right]^2
+            \]
+            <p>其中 \(w(u,v)\) 是窗口函数（通常用高斯窗，越靠近中心权重越大）</p>
+            <p>一阶泰勒展开后近似为：</p>
+            \[
+            E(\Delta x, \Delta y) \approx \sum_{(u,v) \in \Omega} w(u,v) \left[ I_x(u,v) \Delta x + I_y(u,v) \Delta y \right]^2= [\Delta x, \Delta y] \, M \begin{bmatrix} \Delta x \\ \Delta y \end{bmatrix}
+            \]
+            <p>其中 \(M\) 为自相关矩阵：</p>
+            \[
+            M = \sum_{x,y} w(x,y)
+            \begin{bmatrix}
+            I_x^2 & I_x I_y \\
+            I_x I_y & I_y^2
+            \end{bmatrix}
+            \]
+            <p>\(I_x, I_y\) 为图像在 \(x,y\) 方向的梯度。可分别用<strong>水平、垂直差分算子</strong>对图像中每个像素进行滤波得到：</p>
+            \[
+            \text{水平差分算子：}
+            \left[\begin{array}{rrr}
+            -1 & 0 & 1 \\
+            -1 & 0 & 1 \\
+            -1 & 0 & 1
+            \end{array}\right]
+            \quad
+            \text{垂直差分算子：}
+            \left[\begin{array}{rrr}
+            -1 & -1 & -1 \\
+            0 & 0 & 0 \\
+            1 & 1 & 1
+            \end{array}\right]
+            \]
+
+            <div class="callout tip">
+                <strong>💡 提示</strong>
+                <p>矩阵 \(M\) 的两个特征值 \(\lambda_1, \lambda_2\) 直接反映了局部纹理的走向：</p>
+                <ul>
+                    <li>两个值都很小，该局部为平坦区（往哪个方向移动，灰度变化都不大）</li>
+                    <li>一大一小，检测到边缘（沿着边缘方向移动，灰度几乎不变；垂直边缘移动，变化很大）</li>
+                    <li>都很大，表示检测得到角点（无论往哪个方向移动，灰度都会发生很大变化）</li>
+                </ul>
+                <p>为避免直接求特征值，Harris 构造了一个<strong>角点响应函数 R</strong></p>
+            </div>
+
+            <p>角点响应函数：</p>
+            \[
+            R = \det(M) - k \cdot (\operatorname{trace}(M))^2, \quad k \in [0.04, 0.06]
+            \]
+            <p>\(\det(M) = \lambda_1 \lambda_2\)，\(\operatorname{trace}(M) = \lambda_1 + \lambda_2\)。</p>
+            <p>对 \(R\) 进行非极大值抑制，局部最大值即为角点。</p>
+            <img src="./sourceimgs/第4章 特征感知/image-20260507144942034.png" alt="Harris角点检测示例图" style="zoom:15%;">
+
+            <pre><code class="language-python">import cv2
+import numpy as np
+
+img = cv2.imread('building.jpg')
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+gray = np.float32(gray)
+
+# 参数：gray, 邻域大小(2~3), Sobel孔径(3), k值
+dst = cv2.cornerHarris(gray, blockSize=2, ksize=3, k=0.04)
+
+# 膨胀一下让点更明显
+dst = cv2.dilate(dst, None)
+
+# 标记角点：大于 max*dst * 0.01 的点画红
+img[dst > 0.01 * dst.max()] = [0, 0, 255]
+
+cv2.imshow('Harris Corners', img)
+cv2.waitKey(0)
+</code></pre>
+
+            <h4>③ FAST 角点检测</h4>
+            <p>Features from Accelerated Segment Test 是一种非常简单快速的角点检测算法，角点定义为在像素点的周围邻域内有足够多的像素点的灰度值大于或者小于该点的灰度值。（非常直觉化，完全避开梯度计算）</p>
+            <p>以候选点 \(p\) 为中心，考察半径为3的离散圆周上的16个像素。若存在连续12个像素的灰度值与 \(p\) 点的灰度值差超过阈值，则判定为角点。计算速度极快，常用于实时系统。</p>
+            <img src="./sourceimgs/第4章 特征感知/image-20260507145454780.png" alt="FAST角点检测示意图" style="zoom:50%;">
+
+            <h4>④ SUSAN 角点检测</h4>
+            <div class="callout note">
+                <strong>📌 注意</strong>
+                <p>SUSAN（Smallest Univalue Segment Assimilating Nucleus，最小核值相似区）角点检测的思路非常独特，完全没有使用“梯度”这个概念，而是基于一个圆形模板（中心称为“<strong>核</strong>”）内亮度相似的区域面积来判定角点。</p>
+            </div>
+            <p>SUSAN模板移动时，计算所覆盖局部区域所有非中心点与中心点的灰度值之差，差值小于某个阈值的点看作和中心点是同质的，其余点是非同质的。</p>
+            <ul>
+                <li>平坦区域，局部区域的所有非中心点和中心点是同质的，差值接近于0，同质区域占比接近于1；</li>
+                <li>边缘区域，同质区域占的比例总是大于1/2的；</li>
+                <li>角点区域，同质区域占比远小于 1/2的。</li>
+            </ul>
+            <p>那么可以定义这样一个函数 \(c\) 来标记区域中与中心同质的点：</p>
+            \[
+            c(u,v) = \begin{cases}
+            1, & |I(x,y) - I(u,v)| < t_0 \\
+            0, & \text{otherwise}
+            \end{cases}
+            \]
+            <p>统计与中心点“同质”的像素数 \(n = \sum c\) 。</p>
+            <ul>
+                <li>平坦区域：\(n\) 接近模板总面积；</li>
+                <li>边缘区域：\(n > \dfrac{S}{2}\)；</li>
+                <li>角点区域：\(n < \dfrac{S}{2}\)。</li>
+            </ul>
+            <p>响应函数可定义为：</p>
+            \[
+            R =
+            \begin{cases}
+            \dfrac{S}{2} - n, & n<\dfrac{S}{2}\\[8pt]
+            0, & \text{otherwise}
+            \end{cases}
+            \]
+            <p>对于平坦和边缘区域，\(R = 0\) ，不会判断为角点。对于角点而言，则会输出一个较大值，判定为角点。</p>
+
+            <!-- 1.2.2 边缘检测 -->
+            <h3 id="edge-detection">1.2.2 边缘检测</h3>
+            <p>边缘是一组相连的像素，位于两个不同区域的边界上。检测基于灰度的一阶或二阶导数（对噪声非常敏感，采用滤波的方法对含噪声的图像进行平滑能改善边缘检测的性能）。</p>
+            <p>特定的模板可以检测<strong>特定方向的边缘</strong>，因此可以通过比较多个典型模板的计算值来确定一个像素点是否在某个特定的边缘上。</p>
+            <img src="./sourceimgs/第4章 特征感知/image-20260507151810730.png" alt="边缘模板示例" style="zoom:50%;">
+
+            <h4>① 梯度算子</h4>
+            <p>梯度向量：</p>
+            \[
+            \nabla f = \begin{bmatrix} \dfrac{\partial f}{\partial x} \\ \dfrac{\partial f}{\partial y} \end{bmatrix}
+            \]
+            <p>梯度幅值：</p>
+            \[
+            G = \|\nabla f\| = \sqrt{ \left( \frac{\partial f}{\partial x} \right)^2 + \left( \frac{\partial f}{\partial y} \right)^2 } \approx \frac{\partial f}{\partial x} + \frac{\partial f}{\partial y}
+            \]
+            <p>方向角：</p>
+            \[
+            \phi(x,y) = \tan^{-1}\left( \frac{\partial f / \partial y}{\partial f / \partial x} \right)
+            \]
+            <p>常用 Roberts、Sobel、Prewitt 算子近似计算梯度。</p>
+
+            <table>
+                <thead>
+                    <tr><th>模板名</th><th>计算式</th><th>模板形式（矩阵）</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Roberts算子</strong></td>
+                        <td>\(f_x' = \lvert f(x+1,y+1) - f(x-1,y-1) \rvert\)<br>\(f_y' = \lvert f(x-1,y+1) - f(x+1,y-1) \rvert\)</td>
+                        <td>水平梯度：\(\begin{bmatrix} -1 & 0 \\ 0 & 1 \end{bmatrix}\) 垂直梯度：\(\begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix}\)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Prewitt算子</strong></td>
+                        <td>\(f_x' = \left\lvert \begin{matrix} f(x+1,y-1)+f(x+1,y)+f(x+1,y+1) \\ -f(x-1,y-1)-f(x-1,y)-f(x-1,y+1) \end{matrix} \right\rvert\)<br>\(f_y' = \left\lvert \begin{matrix} f(x-1,y+1)+f(x,y+1)+f(x+1,y+1) \\ -f(x-1,y-1)-f(x,y-1)-f(x+1,y-1) \end{matrix} \right\rvert\)</td>
+                        <td>水平梯度：\(\begin{bmatrix} -1 & 0 & 1 \\ -1 & 0 & 1 \\ -1 & 0 & 1 \end{bmatrix}\) 垂直梯度：\(\begin{bmatrix} -1 & -1 & -1 \\ 0 & 0 & 0 \\ 1 & 1 & 1 \end{bmatrix}\)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sobel算子</strong></td>
+                        <td>\(f_x' = \left\lvert \begin{matrix} f(x+1,y-1)+2f(x+1,y)+f(x+1,y+1) \\ -f(x-1,y-1)-2f(x-1,y)-f(x-1,y+1) \end{matrix} \right\rvert\)<br>\(f_y' = \left\lvert \begin{matrix} f(x-1,y+1)+2f(x,y+1)+f(x+1,y+1) \\ -f(x-1,y-1)-2f(x,y-1)-f(x+1,y-1) \end{matrix} \right\rvert\)</td>
+                        <td>水平梯度：\(\begin{bmatrix} -1 & -2 & -1 \\ 0 & 0 & 0 \\ 1 & 2 & 1 \end{bmatrix}\) 垂直梯度：\(\begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1 \end{bmatrix}\)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>② Laplacian 算子</h4>
+            <p>二阶微分：</p>
+            \[
+            \nabla^2 f = \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2}
+            \]
+            <p>常用离散模板：</p>
+            \[
+            \nabla^2 f(x,y) = f(x+1,y) + f(x-1,y) + f(x,y+1) + f(x,y-1) - 4f(x,y)
+            \]
+            <p>对应的模板为：</p>
+            \[
+            \begin{bmatrix}
+            0 & -1 & 0 \\
+            -1 & 4 & -1 \\
+            0 & -1 & 0
+            \end{bmatrix}
+            \]
+            <p>还有一个常用的模板形式为：</p>
+            \[
+            \begin{bmatrix}
+            -1 & -1 & -1 \\
+            -1 & 8 & -1 \\
+            -1 & -1 & -1
+            \end{bmatrix}
+            \]
+            <p>Laplacian 对噪声敏感，通常先进行高斯平滑。</p>
+
+            <h4>③ LoG (Marr) 算子</h4>
+            <p>先高斯平滑再求 Laplacian：</p>
+            \[
+            \nabla^2 [G_\sigma * f] = (\nabla^2 G_\sigma) * f
+            \]
+            <p>其中 \(G_\sigma(x,y) = \exp\left(-\dfrac{x^2+y^2}{2\sigma^2}\right)\)。</p>
+            <p>\(\nabla^2 G_\sigma\) （LoG滤波器）为“墨西哥草帽”形状，可同时检测边缘。参数 \(\sigma\) 控制平滑程度，需根据噪声水平选择。</p>
+
+            <h4>④ Canny 边缘检测</h4>
+            <p>经典流程：</p>
+            <ol>
+                <li>高斯滤波平滑图像；</li>
+                <li>计算梯度幅值和方向（常用一阶差分）；</li>
+                <li>非极大值抑制：仅保留梯度方向上的局部最大值，细化边缘；</li>
+                <li>双阈值检测：设高、低两个阈值，强边缘直接保留，弱边缘只有当与强边缘连接时才保留，以此去除噪声引起的假边缘。</li>
+            </ol>
+
+            <h4>⑤ Hough 变换</h4>
+            <p>用于检测直线、圆等几何形状。直线检测在极坐标下表示为：</p>
+            \[
+            \rho = x \cos\theta + y \sin\theta
+            \]
+            <p>每个图像点 \((x,y)\) 映射到参数空间 \((\rho,\theta)\) 的一条曲线，多条曲线交于一点即对应一条直线。通过统计峰值确定直线参数。Hough 变换抗噪性强，能连接断裂边缘。</p>
+
+            <!-- 1.2.3 区域分割 -->
+            <h3 id="region-seg">1.2.3 区域分割</h3>
+
+            <h4>① 阈值化分割</h4>
+            <p>单阈值：</p>
+            \[
+            g(x,y) = \begin{cases}
+            1, & f(x,y) \geq T \\
+            0, & f(x,y) < T
+            \end{cases}
+            \]
+            <p>多阈值：用多个阈值将图像划分为多个区域。</p>
+            <p>阈值选取方法：Otsu 算法通过最大化类间方差自动确定最优阈值。</p>
+
+            <h4>② Otsu 最佳全局阈值</h4>
+            <p>设图像有 \(L\) 个灰度级，\(p_i\) 为灰度 \(i\) 的概率。阈值 \(k\) 将像素分为 \(C_0\) 和 \(C_1\) 两类。</p>
+            <p>类概率：</p>
+            \[
+            \omega_0 = \sum_{i=0}^{k} p_i = \omega(k), \quad \omega_1 = 1 - \omega(k)
+            \]
+            <p>类均值：</p>
+            \[
+            \mu_0 = \frac{\sum_{i=0}^{k} i p_i}{\omega_0} = \frac{\mu(k)}{\omega(k)}, \quad
+            \mu_1 = \frac{\mu_T - \mu(k)}{1 - \omega(k)}
+            \]
+            <p>其中 \(\mu_T\) 为全图平均灰度。</p>
+            <p>类间方差：</p>
+            \[
+            \sigma_B^2(k) = \omega_0 (\mu_0 - \mu_T)^2 + \omega_1 (\mu_1 - \mu_T)^2 = \frac{[\mu_T \omega(k) - \mu(k)]^2}{\omega(k)[1 - \omega(k)]}
+            \]
+            <p>最优阈值 \(k^*\) 使 \(\sigma_B^2(k)\) 最大。</p>
+
+            <h4>③ 分水岭分割</h4>
+            <p>将灰度图像视为地形，灰度值对应高度。在每个局部最小值处“打洞”并注水，当不同盆地的水即将汇合时筑起水坝，最终水坝即为分割线。适合分离粘连目标，但易受噪声产生过分割。</p>
+
+            <h4>④ 空间聚类分割</h4>
+            <p>K-均值聚类：最小化类内平方误差</p>
+            \[
+            J = \sum_{i=1}^{c} \sum_{y \in \Gamma_i} \| y - m_i \|^2
+            \]
+            <p>迭代更新聚类中心 \(m_i\)。</p>
+            <p>模糊 C-均值：引入隶属度 \(u_{ji}\)，目标函数</p>
+            \[
+            J = \sum_{j=1}^{n} \sum_{i=1}^{c} u_{ji}^m \| x_j - m_i \|^2, \quad m>1
+            \]
+            <p>隶属度表示像素属于某类的程度，可处理不确定边界。</p>
+        </section>
+
+        <!-- 1.3 基于区域分析的方法 -->
+        <section id="region-analysis" class="card">
+            <h2>1.3 基于区域分析的方法</h2>
+
+            <h3>① 区域生长</h3>
+            <ol>
+                <li>选取种子点；</li>
+                <li>定义生长准则（如灰度差小于阈值，且连通）；</li>
+                <li>迭代将满足准则的邻域像素加入区域，直到没有新像素加入。</li>
+            </ol>
+
+            <h3>② 区域分裂与合并</h3>
+            <p>利用四叉树结构：</p>
+            <ul>
+                <li>对任一区域 \(R\)，若 \(P(R) = \text{FALSE}\)（不满足均匀性准则），则将其均分为四个子区域；</li>
+                <li>对相邻区域 \(R_i, R_j\)，若 \(P(R_i \cup R_j) = \text{TRUE}\)，则合并；</li>
+                <li>重复直到没有可分裂或合并的区域。</li>
+            </ul>
+
+            <h3>③ 超像素 (SLIC)</h3>
+            <p>在 CIE LAB 颜色空间中，像素表示为 \([l, a, b, x, y]^T\)。</p>
+            <p>初始种子点间距 \(S = \sqrt{N/K}\)（\(N\) 为像素总数，\(K\) 为期望超像素数）。</p>
+            <p>距离度量：</p>
+            \[
+            d_c = \sqrt{(l_j - l_i)^2 + (a_j - a_i)^2 + (b_j - b_i)^2}
+            \]
+            \[
+            d_s = \sqrt{(x_j - x_i)^2 + (y_j - y_i)^2}
+            \]
+            \[
+            D = \sqrt{ d_c^2 + \left( \frac{d_s}{S} \right)^2 m^2 }
+            \]
+            <p>参数 \(m\) 控制颜色与空间相似性的相对权重。SLIC 生成紧凑、边界贴合的超像素，大幅降低后续处理复杂度。</p>
+        </section>
+
+        <!-- 1.4 目标特征分析方法 -->
+        <section id="feature-analysis" class="card">
+            <h2>1.4 目标特征分析方法</h2>
+            <p>对传感器数据中产生的<strong>目标候选区域</strong>，计算并描述其多种重要特性，分析根据这些特性对目标类型进行分类的<strong>有效性</strong>，并<strong>选择</strong>其中具有决定性影响的部分特性，<strong>构建成为目标特征</strong>。</p>
+
+            <div class="callout note">
+                <strong>📌 注意</strong>
+                <p>目标候选区域中的传感器数据直接用于目标分类，计算消耗非常大，且分类效果不一定好（可能有干扰）。<br>
+                    <strong>目的</strong>：经过特征提取和选择，组成分类特征，尽可能保留分类信息，在保证分类精度的前提下，减少特征维数，保证目标分类的性能。
+                </p>
+            </div>
+            <p>要求：</p>
+            <ul>
+                <li>具有很大的<strong>识别信息量</strong>。即应具有很好的可分性。</li>
+                <li>具有<strong>可靠性</strong>。模棱两可、似是而非、时是时非等不易判别的特征应丢掉。</li>
+                <li>尽可能强的<strong>独立性</strong>。重复的、相关性强的特征只选一个。</li>
+                <li>数量<strong>尽量少</strong>，同时损失的信息尽量小。</li>
+            </ul>
+
+            <!-- 1.4.1 特征提取与特征选择 -->
+            <h3 id="extraction-vs-selection">1.4.1 特征提取与特征选择</h3>
+            <ul>
+                <li><strong>特征提取</strong>：通过<strong>数学变换</strong>将原始 \(L\) 维度量值映射为 \(m\) 维新特征（\(m < L\)），如投影、变换。</li>
+                <li><strong>特征选择</strong>：从原始 \(L\) 个特征中挑选出最具分类能力的 \(m\) 个子集。</li>
+            </ul>
+            <img src="./sourceimgs/第4章 特征感知/image-20260507161215129.png" alt="特征提取与选择示意图" style="zoom:67%;">
+
+            <!-- 1.4.2 特征指标 -->
+            <h3 id="feature-metrics">1.4.2 特征指标</h3>
+
+            <h4>1. 特征向量的相关性</h4>
+            <ul>
+                <li>点积：\(\mathbf{x} \cdot \mathbf{y} = \|\mathbf{x}\| \|\mathbf{y}\| \cos \theta\)</li>
+                <li>夹角余弦：\(\cos \theta = \dfrac{\mathbf{x}^T \mathbf{y}}{\|\mathbf{x}\| \|\mathbf{y}\|}\)</li>
+                <li>投影长度：\(x_0 = \|\mathbf{x}\| \cos \theta\)</li>
+                <li>残差向量：\(\mathbf{r}_x = \mathbf{x} - \dfrac{\|\mathbf{x}\| \cos \theta}{\|\mathbf{y}\|} \mathbf{y}\)</li>
+            </ul>
+
+            <h4>2. 类别可分性测度</h4>
+            <img src="./sourceimgs/第4章 特征感知/image-20260507161646899.png" alt="类别可分性测度示意图" style="zoom:67%;">
+
+            <p><strong>① 类内距离</strong></p>
+            <p>同一类模式点集 \(\mathbf X \in \mathbb R^{m\times n}\) 内，各样本间的均方距离的期望：</p>
+            \[
+            \bar{D}^2 = \mathbb E\left[ \| \mathbf{x}_i - \mathbf{x}_j \|^2 \right] = 2 \operatorname{tr}(\mathbf{C})
+            \]
+            <p>详细推导可见 <a href="./Reference/类内距离推导.html">类内距离推导</a></p>
+            <p>\(\mathbf{C} = \mathbb E \left[ (\mathbf X - \mathbf M)(\mathbf X - \mathbf M)^T\right]\) 为该类的协方差矩阵，\(\operatorname{tr}(\mathbf{C})\) 为各分量方差之和。类内散布矩阵 \(\mathbf{S}_w\) 表示各样本点围绕均值的散布情况，即 \(\mathbf{S}_w = \mathbf C\)。</p>
+
+            <div class="callout tip">
+                <strong>💡 提示</strong>
+                <p>特征选择或提取的结果应使 \(\operatorname{tr}(\mathbf{C})\) <strong>愈小愈好</strong>。</p>
+            </div>
+
+            <p><strong>② 类间距离</strong></p>
+            <p>第 \(i\) 类与总体均值 \(\mathbf{M}_0\) 的加权距离：</p>
+            \[
+            \bar{D}_b^2 = \sum_{i=1}^{c} P(\omega_i) \| \mathbf{M}_i - \mathbf{M}_0 \|^2 = \operatorname{tr}(\mathbf{S}_b)
+            \]
+            <p>其中 \(\mathbf{S}_b = \sum_{i=1}^{c} P(\omega_i) (\mathbf{M}_i - \mathbf{M}_0)(\mathbf{M}_i - \mathbf{M}_0)^T\) 为类间散布矩阵。</p>
+
+            <div class="callout tip">
+                <strong>💡 提示</strong>
+                <p>特征选择或提取的结果应使 \(\operatorname{tr}(\mathbf{S}_b)\) <strong>愈大愈好</strong>。</p>
+            </div>
+
+            <p><strong>③ 多类散布矩阵</strong></p>
+            <p>类内散布矩阵：\(\mathbf{S}_w = \sum_{i=1}^{c} P(\omega_i) E\{ (\mathbf{X} - \mathbf{M}_i)(\mathbf{X} - \mathbf{M}_i)^T \}\)</p>
+            <p>类间散布矩阵：\(\mathbf{S}_b\)（同上）</p>
+            <p>总体散布矩阵：\(\mathbf{S}_t = \mathbf{S}_b + \mathbf{S}_w\)</p>
+            <p>多类平均平方距离：\(J_d = \operatorname{tr}(\mathbf{S}_t)\)。</p>
+
+            <!-- 1.4.3 基于类内散布矩阵的特征提取 -->
+            <h3 id="intra-class-transform">1.4.3 基于类内散布矩阵的特征提取</h3>
+            <p><strong>目标</strong>：通过正交变换 \(\mathbf{A}\) 将 \(n\) 维向量 \(\mathbf{X}\) 降为 \(m\) 维。</p>
+            <p>设类的协方差矩阵 \(\mathbf{C}\)，特征值 \(\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n\)，对应归一化特征向量 \(\mathbf{u}_k\)。</p>
+            <p>取 \(\mathbf{A}\) 的行由前 \(m\) 个<strong>最小</strong>特征值对应的特征向量构成（\(m \times n\)）。</p>
+            <p>变换后：</p>
+            \[
+            \mathbf{M}^* = \mathbf{A} \mathbf{M}, \quad \mathbf{C}^* = \mathbf{A} \mathbf{C} \mathbf{A}^T = \operatorname{diag}(\lambda_1, \dots, \lambda_m)
+            \]
+            <p>各分量互不相关，且类内距离保持不变。选择小特征值可使样本更紧凑。</p>
+            <p>详细推导见 <a href="./Reference/基于类内散布矩阵的特征提取推导.html">基于类内散布矩阵的特征提取推导</a></p>
+        </section>
+
+        <footer style="text-align:center; margin-top:2rem; color:#7f8c8d; font-size:0.9rem;">
+            <p>📘 海洋机器人环境感知 · 第四章传感器特征分析 | 整理内容仅供学习参考</p>
+        </footer>
+    </main>
+
+    <script>
+        // 初始化 Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            mindmap: {
+                useMaxWidth: true,
+                padding: 15
+            }
+        });
+
+        // 导航激活状态
+        const navLinks = document.querySelectorAll('.sidebar a');
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

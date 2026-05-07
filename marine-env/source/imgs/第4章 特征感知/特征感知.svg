@@ -1,0 +1,332 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 2600" width="100%" height="100%" style="background-color: #F8FAFC; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;">
+    <defs>
+        <!-- 滤镜：阴影效果 -->
+        <filter id="shadow-sm" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.08" />
+        </filter>
+        <filter id="shadow-md" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.1" />
+        </filter>
+        <filter id="shadow-lg" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.15" />
+        </filter>
+
+        <!-- 渐变色：根节点 -->
+        <linearGradient id="grad-root" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#1E3A8A" />
+            <stop offset="100%" stop-color="#3B82F6" />
+        </linearGradient>
+        
+        <!-- 渐变色：章节 1（蓝色） -->
+        <linearGradient id="grad-ch1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#2563EB" />
+            <stop offset="100%" stop-color="#60A5FA" />
+        </linearGradient>
+        <!-- 渐变色：章节 2（翠绿色） -->
+        <linearGradient id="grad-ch2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#059669" />
+            <stop offset="100%" stop-color="#34D399" />
+        </linearGradient>
+        <!-- 渐变色：章节 3（橙色） -->
+        <linearGradient id="grad-ch3" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#EA580C" />
+            <stop offset="100%" stop-color="#FBBF24" />
+        </linearGradient>
+        <!-- 渐变色：章节 4（紫色） -->
+        <linearGradient id="grad-ch4" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#7C3AED" />
+            <stop offset="100%" stop-color="#A78BFA" />
+        </linearGradient>
+        <!-- 渐变色：章节 5（玫瑰色） -->
+        <linearGradient id="grad-ch5" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#E11D48" />
+            <stop offset="100%" stop-color="#FB7185" />
+        </linearGradient>
+    </defs>
+
+    <!-- 背景网格（轻微网格线，提升专业感） -->
+    <rect width="100%" height="100%" fill="#F8FAFC" />
+    <path d="M 0 200 L 1800 200 M 0 400 L 1800 400 M 0 600 L 1800 600 M 0 800 L 1800 800 M 0 1000 L 1800 1000 M 0 1200 L 1800 1200 M 0 1400 L 1800 1400 M 0 1600 L 1800 1600 M 0 1800 L 1800 1800 M 0 2000 L 1800 2000 M 0 2200 L 1800 2200 M 0 2400 L 1800 2400 M 0 2600 L 1800 2600" fill="none" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="10 10" opacity="0.5" />
+
+    <!-- 全局连接线（贝塞尔曲线） -->
+    <g fill="none" stroke="#94A3B8" stroke-width="2" opacity="0.7">
+        <!-- 根节点到一级节点 -->
+        <path d="M 900 140 C 950 140, 950 260, 1000 260" />
+        <path d="M 900 140 C 950 140, 950 660, 1000 660" />
+        <path d="M 900 140 C 950 140, 950 1060, 1000 1060" />
+        <path d="M 900 140 C 950 140, 950 1460, 1000 1460" />
+        <path d="M 900 140 C 950 140, 950 1860, 1000 1860" />
+
+        <!-- 章节 1 分支线：传感器特征分析 -->
+        <path d="M 1220 260 C 1320 260, 1320 180, 1400 180" />
+        <path d="M 1220 260 C 1320 260, 1320 420, 1400 420" />
+        
+        <!-- 章节 1 子分支线 -->
+        <path d="M 1620 180 C 1720 180, 1720 100, 1800 100" />
+        <path d="M 1620 180 C 1720 180, 1720 160, 1800 160" />
+        <path d="M 1620 180 C 1720 180, 1720 220, 1800 220" />
+        <path d="M 1620 420 C 1720 420, 1720 380, 1800 380" />
+        <path d="M 1620 420 C 1720 420, 1720 420, 1800 420" />
+        <path d="M 1620 420 C 1720 420, 1720 460, 1800 460" />
+
+        <!-- 章节 2 分支线：人工特征设计方法 -->
+        <path d="M 1220 660 C 1320 660, 1320 580, 1400 580" />
+        <path d="M 1220 660 C 1320 660, 1320 680, 1400 680" />
+        <path d="M 1220 660 C 1320 660, 1320 780, 1400 780" />
+        <path d="M 1220 660 C 1320 660, 1320 880, 1400 880" />
+
+        <!-- 章节 2 子分支线 -->
+        <path d="M 1620 580 C 1720 580, 1720 560, 1800 560" />
+        <path d="M 1620 680 C 1720 680, 1720 660, 1800 660" />
+        <path d="M 1620 680 C 1720 680, 1720 720, 1800 720" />
+        <path d="M 1620 780 C 1720 780, 1720 780, 1800 780" />
+        <path d="M 1620 880 C 1720 880, 1720 860, 1800 860" />
+        <path d="M 1620 880 C 1720 880, 1720 900, 1800 900" />
+
+        <!-- 章节 3 分支线：特征降维与压缩 -->
+        <path d="M 1220 1060 C 1320 1060, 1320 1020, 1400 1020" />
+        <path d="M 1220 1060 C 1320 1060, 1320 1120, 1400 1120" />
+        <path d="M 1220 1060 C 1320 1060, 1320 1220, 1400 1220" />
+
+        <!-- 章节 4 分支线：海洋环境常用特征 -->
+        <path d="M 1220 1460 C 1320 1460, 1320 1480, 1400 1480" />
+
+        <!-- 章节 4 子分支线 -->
+        <path d="M 1620 1480 C 1720 1480, 1720 1440, 1800 1440" />
+        <path d="M 1620 1480 C 1720 1480, 1720 1480, 1800 1480" />
+        <path d="M 1620 1480 C 1720 1480, 1720 1520, 1800 1520" />
+
+        <!-- 章节 5 分支线：深度学习特征提取 -->
+        <path d="M 1220 1860 C 1320 1860, 1320 1840, 1400 1840" />
+        <path d="M 1220 1860 C 1320 1860, 1320 1960, 1400 1960" />
+
+        <!-- 章节 5 子分支线 -->
+        <path d="M 1620 1960 C 1720 1960, 1720 1960, 1800 1960" />
+        <path d="M 1620 1960 C 1720 1960, 1720 2000, 1800 2000" />
+    </g>
+
+    <!-- 节点（上层） -->
+    <g font-family="'Segoe UI', Roboto, sans-serif">
+        
+        <!-- 根节点 -->
+        <g transform="translate(750, 100)" filter="url(#shadow-lg)">
+            <rect width="300" height="80" rx="12" fill="url(#grad-root)" />
+            <text x="150" y="32" font-size="20" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">海洋机器人环境感知</text>
+            <text x="150" y="58" font-size="16" font-weight="bold" fill="#BFDBFE" text-anchor="middle" letter-spacing="2">第四章 特征感知技术</text>
+        </g>
+
+        <!-- ==================== 章节 1：传感器特征分析 ==================== -->
+        <g transform="translate(1000, 230)" filter="url(#shadow-md)">
+            <rect width="220" height="60" rx="8" fill="url(#grad-ch1)" />
+            <text x="110" y="36" font-size="18" font-weight="bold" fill="#FFFFFF" text-anchor="middle">01 传感器特征分析</text>
+        </g>
+
+        <!-- 二级节点 1.1 -->
+        <g transform="translate(1400, 150)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#3B82F6" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#1E3A8A" text-anchor="middle">目标候选区域</text>
+        </g>
+        <!-- 二级节点 1.2 -->
+        <g transform="translate(1400, 390)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#3B82F6" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#1E3A8A" text-anchor="middle">目标特征分析</text>
+        </g>
+
+        <!-- 三级节点 1.1.1 -->
+        <g transform="translate(1800, 70)" filter="url(#shadow-sm)">
+            <rect width="340" height="60" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5" />
+            <text x="170" y="25" font-size="15" font-weight="bold" fill="#1E40AF" text-anchor="middle">基于图像分割</text>
+            <text x="170" y="45" font-size="12" fill="#475569" text-anchor="middle">像素不连续性 / 相似性</text>
+        </g>
+        <g transform="translate(1800, 190)" filter="url(#shadow-sm)">
+            <rect width="340" height="60" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5" />
+            <text x="170" y="25" font-size="15" font-weight="bold" fill="#1E40AF" text-anchor="middle">基于区域分析</text>
+            <text x="170" y="45" font-size="12" fill="#475569" text-anchor="middle">相似像素集合 / 迭代生长</text>
+        </g>
+
+        <!-- 三级节点 1.2 -->
+        <g transform="translate(1800, 360)" filter="url(#shadow-sm)">
+            <rect width="340" height="60" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5" />
+            <text x="170" y="25" font-size="15" font-weight="bold" fill="#1E40AF" text-anchor="middle">提取 vs 选择</text>
+            <text x="170" y="45" font-size="12" fill="#475569" text-anchor="middle">保留分类信息 / 降维</text>
+        </g>
+        <g transform="translate(1800, 500)" filter="url(#shadow-sm)">
+            <rect width="340" height="60" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5" />
+            <text x="170" y="25" font-size="15" font-weight="bold" fill="#1E40AF" text-anchor="middle">相关性 / 可分性测度</text>
+            <text x="170" y="45" font-size="12" fill="#475569" text-anchor="middle">类内散布矩阵 / 类间散布矩阵</text>
+        </g>
+
+        <!-- 四级节点（最细节部分） -->
+        <g transform="translate(2220, 40)" filter="url(#shadow-sm)">
+            <rect width="360" height="120" rx="4" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
+            <text x="180" y="25" font-size="14" font-weight="bold" fill="#0F172A" text-anchor="middle">孤立点 / 边缘 / 区域分割</text>
+            <text x="180" y="45" font-size="12" fill="#64748B" text-anchor="middle">Harris / FAST / SUSAN (角点)</text>
+            <text x="180" y="65" font-size="12" fill="#64748B" text-anchor="middle">Canny / Hough / LoG (边缘)</text>
+            <text x="180" y="85" font-size="12" fill="#64748B" text-anchor="middle">阈值化 / 分水岭 / 空间聚类 (区域)</text>
+        </g>
+        <g transform="translate(2220, 180)" filter="url(#shadow-sm)">
+            <rect width="360" height="80" rx="4" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
+            <text x="180" y="25" font-size="14" font-weight="bold" fill="#0F172A" text-anchor="middle">区域分析方法</text>
+            <text x="180" y="45" font-size="12" fill="#64748B" text-anchor="middle">区域生长 / 分裂与合并 / 超像素</text>
+            <text x="180" y="65" font-size="12" fill="#64748B" text-anchor="middle">CIE LAB 颜色空间 / k-means</text>
+        </g>
+        <g transform="translate(2220, 340)" filter="url(#shadow-sm)">
+            <rect width="360" height="80" rx="4" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
+            <text x="180" y="25" font-size="14" font-weight="bold" fill="#0F172A" text-anchor="middle">基于类内散布矩阵</text>
+            <text x="180" y="45" font-size="12" fill="#64748B" text-anchor="middle">协方差矩阵 C → 特征值 λ₁…λₙ</text>
+            <text x="180" y="65" font-size="12" fill="#64748B" text-anchor="middle">构造变换矩阵 A（降维）</text>
+        </g>
+        <g transform="translate(2220, 500)" filter="url(#shadow-sm)">
+            <rect width="360" height="80" rx="4" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
+            <text x="180" y="25" font-size="14" font-weight="bold" fill="#0F172A" text-anchor="middle">K-L 变换 (Karhunen-Loève)</text>
+            <text x="180" y="45" font-size="12" fill="#64748B" text-anchor="middle">自相关矩阵 R 特征向量展开</text>
+            <text x="180" y="65" font-size="12" fill="#64748B" text-anchor="middle">截断均方误差最小 / 消除相关性</text>
+        </g>
+
+        <!-- ==================== 章节 2：人工特征设计方法 ==================== -->
+        <g transform="translate(1000, 630)" filter="url(#shadow-md)">
+            <rect width="220" height="60" rx="8" fill="url(#grad-ch2)" />
+            <text x="110" y="36" font-size="18" font-weight="bold" fill="#FFFFFF" text-anchor="middle">02 人工特征设计方法</text>
+        </g>
+
+        <!-- 二级节点 2.1 -->
+        <g transform="translate(1400, 550)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#10B981" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#064E3B" text-anchor="middle">必要性 / 方法类别</text>
+        </g>
+        <!-- 二级节点 2.2 -->
+        <g transform="translate(1400, 650)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#10B981" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#064E3B" text-anchor="middle">边界描述方法</text>
+        </g>
+        <!-- 二级节点 2.3 -->
+        <g transform="translate(1400, 750)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#10B981" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#064E3B" text-anchor="middle">区域描述方法</text>
+        </g>
+        <!-- 二级节点 2.4 -->
+        <g transform="translate(1400, 850)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#10B981" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#064E3B" text-anchor="middle">其他人工特征</text>
+        </g>
+
+        <!-- 三级节点 2.2 -->
+        <g transform="translate(1800, 540)" filter="url(#shadow-sm)">
+            <rect width="360" height="60" rx="6" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="1.5" />
+            <text x="180" y="25" font-size="15" font-weight="bold" fill="#065F46" text-anchor="middle">链码 (Chain Code)</text>
+            <text x="180" y="45" font-size="12" fill="#475569" text-anchor="middle">方向序列 / 归一化 / 差分码</text>
+        </g>
+        <g transform="translate(1800, 640)" filter="url(#shadow-sm)">
+            <rect width="360" height="60" rx="6" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="1.5" />
+            <text x="180" y="25" font-size="15" font-weight="bold" fill="#065F46" text-anchor="middle">简单特征 / 傅里叶描述子</text>
+            <text x="180" y="45" font-size="12" fill="#475569" text-anchor="middle">周长 / 曲率 / 形状数 / DFT 变换</text>
+        </g>
+        <!-- 三级节点 2.3 -->
+        <g transform="translate(1800, 740)" filter="url(#shadow-sm)">
+            <rect width="360" height="60" rx="6" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="1.5" />
+            <text x="180" y="25" font-size="15" font-weight="bold" fill="#065F46" text-anchor="middle">面积 / 位置 / Hu 不变矩</text>
+            <text x="180" y="45" font-size="12" fill="#475569" text-anchor="middle">几何矩 → 中心矩 → 7 个不变矩</text>
+        </g>
+        <!-- 三级节点 2.4 -->
+        <g transform="translate(1800, 840)" filter="url(#shadow-sm)">
+            <rect width="360" height="60" rx="6" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="1.5" />
+            <text x="180" y="25" font-size="15" font-weight="bold" fill="#065F46" text-anchor="middle">HOG / Haar 特征</text>
+            <text x="180" y="45" font-size="12" fill="#475569" text-anchor="middle">梯度直方图 / 积分图加速 / 抗噪</text>
+        </g>
+
+        <!-- ==================== 章节 3：特征降维与压缩 ==================== -->
+        <g transform="translate(1000, 1030)" filter="url(#shadow-md)">
+            <rect width="220" height="60" rx="8" fill="url(#grad-ch3)" />
+            <text x="110" y="36" font-size="18" font-weight="bold" fill="#FFFFFF" text-anchor="middle">03 特征降维与压缩</text>
+        </g>
+
+        <!-- 二级节点 3.1 -->
+        <g transform="translate(1400, 990)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#F97316" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#7C2D12" text-anchor="middle">降维目的</text>
+        </g>
+        <!-- 二级节点 3.2 -->
+        <g transform="translate(1400, 1090)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#F97316" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#7C2D12" text-anchor="middle">主成分分析 (PCA)</text>
+        </g>
+        <!-- 二级节点 3.3 -->
+        <g transform="translate(1400, 1190)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#F97316" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#7C2D12" text-anchor="middle">其他降维方法</text>
+        </g>
+
+        <!-- 三级节点 3.2 -->
+        <g transform="translate(1800, 1060)" filter="url(#shadow-sm)">
+            <rect width="360" height="60" rx="6" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1.5" />
+            <text x="180" y="25" font-size="15" font-weight="bold" fill="#9A3412" text-anchor="middle">核心思想 / 实现步骤</text>
+            <text x="180" y="45" font-size="12" fill="#475569" text-anchor="middle">最大化方差 → 协方差矩阵 → 特征向量投影</text>
+        </g>
+        <!-- 三级节点 3.3 -->
+        <g transform="translate(1800, 1160)" filter="url(#shadow-sm)">
+            <rect width="360" height="60" rx="6" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1.5" />
+            <text x="180" y="25" font-size="15" font-weight="bold" fill="#9A3412" text-anchor="middle">LDA / SVD / 信号稀疏表达</text>
+            <text x="180" y="45" font-size="12" fill="#475569" text-anchor="middle">最大化类间差异 / 降噪 / 压缩恢复</text>
+        </g>
+
+        <!-- ==================== 章节 4：海洋环境常用特征 ==================== -->
+        <g transform="translate(1000, 1430)" filter="url(#shadow-md)">
+            <rect width="240" height="60" rx="8" fill="url(#grad-ch4)" />
+            <text x="120" y="36" font-size="18" font-weight="bold" fill="#FFFFFF" text-anchor="middle">04 海洋环境常用特征</text>
+        </g>
+
+        <!-- 二级节点 4.1 -->
+        <g transform="translate(1400, 1450)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#8B5CF6" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#4C1D95" text-anchor="middle">SIFT 算法</text>
+        </g>
+
+        <!-- 三级节点 4.1 -->
+        <g transform="translate(1800, 1420)" filter="url(#shadow-sm)">
+            <rect width="360" height="60" rx="6" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1.5" />
+            <text x="180" y="25" font-size="15" font-weight="bold" fill="#5B21B6" text-anchor="middle">尺度空间 / 关键点定位</text>
+            <text x="180" y="45" font-size="12" fill="#475569" text-anchor="middle">LoG / DoG 近似 / 低对比度去除</text>
+        </g>
+        <g transform="translate(1800, 1500)" filter="url(#shadow-sm)">
+            <rect width="360" height="60" rx="6" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1.5" />
+            <text x="180" y="25" font-size="15" font-weight="bold" fill="#5B21B6" text-anchor="middle">方向分配 / 描述子生成</text>
+            <text x="180" y="45" font-size="12" fill="#475569" text-anchor="middle">梯度直方图 / 种子点 (4x4x8=128维)</text>
+        </g>
+
+        <!-- ==================== 章节 5：深度学习特征提取 ==================== -->
+        <g transform="translate(1000, 1830)" filter="url(#shadow-md)">
+            <rect width="240" height="60" rx="8" fill="url(#grad-ch5)" />
+            <text x="120" y="36" font-size="18" font-weight="bold" fill="#FFFFFF" text-anchor="middle">05 深度学习特征提取</text>
+        </g>
+
+        <!-- 二级节点 5.1 -->
+        <g transform="translate(1400, 1810)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#F43F5E" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#881337" text-anchor="middle">挑战 / 微调</text>
+        </g>
+        <!-- 二级节点 5.2 -->
+        <g transform="translate(1400, 1930)" filter="url(#shadow-sm)">
+            <rect width="220" height="60" rx="6" fill="#FFFFFF" stroke="#F43F5E" stroke-width="2" />
+            <text x="110" y="36" font-size="16" font-weight="bold" fill="#881337" text-anchor="middle">深度残差特征 (ResNet)</text>
+        </g>
+
+        <!-- 三级节点 5.2 -->
+        <g transform="translate(1800, 1940)" filter="url(#shadow-sm)">
+            <rect width="360" height="60" rx="6" fill="#FFF1F2" stroke="#FECDD3" stroke-width="1.5" />
+            <text x="180" y="25" font-size="15" font-weight="bold" fill="#BE123C" text-anchor="middle">ResNet-50 结构</text>
+            <text x="180" y="45" font-size="12" fill="#475569" text-anchor="middle">Conv1-Conv5 / BottleNeck / 跳跃连接</text>
+        </g>
+        <g transform="translate(1800, 2040)" filter="url(#shadow-sm)">
+            <rect width="360" height="60" rx="6" fill="#FFF1F2" stroke="#FECDD3" stroke-width="1.5" />
+            <text x="180" y="25" font-size="15" font-weight="bold" fill="#BE123C" text-anchor="middle">多尺度特征图提取</text>
+            <text x="180" y="45" font-size="12" fill="#475569" text-anchor="middle">2048x7x7 → 池化 → 2048 维向量</text>
+        </g>
+
+    </g>
+
+    <!-- 图例 / 页脚 -->
+    <g transform="translate(40, 2550)" font-size="12" fill="#94A3B8" font-family="'Segoe UI', sans-serif">
+        <text x="0" y="10">© 海洋机器人环境感知 - 第四章思维导图 | 基于《海洋机器人环境感知》课程内容整理</text>
+        <text x="1760" y="10" text-anchor="end">更新于 2024年5月</text>
+    </g>
+</svg>
