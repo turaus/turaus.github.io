@@ -10,21 +10,9 @@
 ├── style.css           # 主样式文件
 ├── script.js           # 交互脚本
 ├── underwater-nav/     # 水下机器人导航基础模块
-│   ├── introduction.html
-│   ├── module.css
-│   ├── sensors.html
-│   ├── algorithms.html
-│   └── applications.html
 ├── ai/                 # 人工智能模块
-│   ├── ml-basics.html
-│   ├── deep-learning.html
-│   ├── computer-vision.html
-│   └── nlp.html
+├── marine-env/         # 海洋机器人环境感知
 └── marine-control/     # 海洋机器人操纵与控制模块
-    ├── kinematics.html
-    ├── dynamics.html
-    ├── control.html
-    └── path-planning.html
 ```
 
 ## 功能特点
