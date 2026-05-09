@@ -369,3 +369,53 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+/* ------------------------------
+   机器学习标签专用样式
+------------------------------ */
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.note-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 18px;
+    background-color: #f8fafc;
+    border-radius: 40px;
+    color: #1e293b;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    border: 1px solid #e2e8f0;
+    backdrop-filter: blur(2px);
+}
+
+.note-tag:hover {
+    background: linear-gradient(135deg, #eef2ff, #ffffff);
+    border-color: #818cf8;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+    color: #4f46e5;
+}
+
+.note-tag:active {
+    transform: translateY(-1px);
+}
+
+/* 卡片内标题与描述微调 */
+.card h3 {
+    margin: 12px 0 4px 0;
+    font-size: 1.3rem;
+}
+
+.card-desc {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+}
