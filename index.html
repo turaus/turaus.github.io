@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习笔记</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 左侧导航栏 -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>📚 学习笔记</h2>
+            <p class="subtitle">个人知识库</p>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#home" class="nav-link active">🏠 首页</a></li>
+            <li><a href="#underwater-nav" class="nav-link">🤖 水下机器人导航基础</a></li>
+            <li><a href="#ai" class="nav-link">🧠 人工智能</a></li>
+            <li><a href="#marine-env" class="nav-link">🚢 海洋机器人环境感知</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>© 个人学习笔记</p>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单按钮 -->
+    <button class="menu-toggle" id="menuToggle">☰</button>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 首页欢迎区 -->
+        <section id="home" class="welcome-section">
+            <h1>欢迎来到我的学习笔记</h1>
+            <p class="intro">这里是记录我学习旅程的知识库，包含了水下机器人、人工智能等领域的学习笔记和心得体会。</p>
+        </section>
+
+        <!-- 水下机器人导航基础模块 -->
+        <section id="underwater-nav" class="module underwater-nav-module">
+            <div class="module-header">
+                <div class="module-icon">🤖</div>
+                <h2>水下机器人导航基础</h2>
+            </div>
+            <p class="module-desc">探索水下机器人导航的核心概念、算法与应用</p>
+            <div class="card-grid">
+                <a href="underwater-nav/水下导航与定位常用坐标系与变换.html" class="card">
+                    <div class="card-icon">🪶</div>
+                    <h3>水下导航与定位常用坐标系与变换</h3>
+
+                </a>
+                <a href="underwater-nav/捷联航姿系统解算.html" class="card">
+                    <div class="card-icon">📖</div>
+                    <h3>捷联航姿系统解算</h3>
+                    
+                </a>
+                <a href="underwater-nav/惯性导航系统.html" class="card">
+                    <div class="card-icon">📡</div>
+                    <h3>惯性导航系统</h3>
+
+                </a>
+                <a href="underwater-nav/四元数介绍.html" class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>四元数介绍</h3>
+
+                </a>
+                <a href="underwater-nav/固定指北SINS误差分析（基于PPT复述）.html" class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>固定指北SINS误差分析（基于PPT复述）</h3>
+
+                </a>
+                <a href="underwater-nav/组合导航卡尔曼滤波.html" class="card">
+                    <div class="card-icon">🔮</div>
+                    <h3>组合导航卡尔曼滤波</h3>
+
+                </a>
+            </div>
+        </section>
+
+        <!-- 人工智能模块 -->
+        <section id="ai" class="module ai-module">
+            <div class="module-header">
+                <div class="module-icon">🧠</div>
+                <h2>人工智能</h2>
+            </div>
+            <p class="module-desc">从基础理论到前沿技术的AI学习之旅</p>
+            <div class="card-grid">
+                <a href="ai/课堂笔记.html" class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>课堂笔记</h3>
+                    <p>课程内容</p>
+                </a>
+                <a href="ai//ML/LearningNote.html" class="card">
+                    <div class="card-icon">🔮</div>
+                    <h3>自学内容</h3>
+                    <p>线性回归、分类器、支持向量机等自学内容</p>
+                </a>
+
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <div class="tag-list">
+                        <a href="ai/ML/1_Linear_regression.html" class="note-tag">📈 线性回归</a>
+                        <a href="ai/ML/2_Linear_classification.html" class="note-tag">📊 线性分类</a>
+                        <a href="ai/ML/3_Decision_tree.html" class="note-tag">🌳 决策树</a>
+                        <a href="ai/ML/4_Neural_Networks.html" class="note-tag">🧠 神经网络</a>
+                        <a href="ai/ML/5_Bayes_Classifier.html" class="note-tag">📉 贝叶斯分类器</a>
+                        <a href="ai/ML/6_Ensemble_learning.html" class="note-tag">👥 集成学习</a>
+                        <a href="ai/ML/7_Clustering.html" class="note-tag">🔍 聚类分析</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 海洋机器人环境感知模块 -->
+        <section id="marine-env" class="module marine-env-module">
+            <div class="module-header">
+                <div class="module-icon">🚢</div>
+                <h2>海洋机器人环境感知</h2>
+            </div>
+            <p class="module-desc">海洋机器人的环境感知技术基础知识</p>
+            <div class="card-grid">
+                <a href="marine-env\第4章-特征感知.html" class="card">
+                    <div class="card-icon">📐</div>
+                    <h3>第四章 - 特征感知</h3>
+                    <p>传感器信息特征工程</p>
+                </a>
+                <a href="marine-env/dynamics.html" class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>动力学分析</h3>
+                    <p>水动力系数与动力学方程</p>
+                </a>
+                <a href="marine-env/control.html" class="card">
+                    <div class="card-icon">🎮</div>
+                    <h3>控制策略</h3>
+                    <p>PID控制、自适应控制与鲁棒控制</p>
+                </a>
+                <a href="marine-env/path-planning.html" class="card">
+                    <div class="card-icon">🗺️</div>
+                    <h3>路径规划</h3>
+                    <p>A*算法、RRT与轨迹优化</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>📝 持续更新中 | 记录学习的每一步</p>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
