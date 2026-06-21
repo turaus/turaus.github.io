@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第四章 · 传感器特征分析 | 海洋机器人环境感知</title>
+    <!-- 引入 Mermaid 用于绘制思维导图 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <!-- 引入 MathJax v3，配置 SVG 输出，确保所有数学公式以矢量图渲染，符合规范 -->
+    <script>
+        MathJax = {
+            tex: {
+                packages: {'[+]': ['base', 'ams', 'newcommand']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                tags: 'none',
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global',
+                scale: 1.0,
+                minScale: 0.8
+            },
+            options: {
+                ignoreHtmlClass: 'no-mathjax',
+                processHtmlClass: 'math'
+            },
+            startup: {
+                ready: () => {
+                    MathJax.startup.defaultReady();
+                    // 确保 mermaid 在 MathJax 之后渲染，避免冲突
+                    if (typeof mermaid !== 'undefined') {
+                        mermaid.contentLoaded();
+                    }
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <style>
+        :root {
+            --primary: #0b3d5f;
+            --primary-light: #145a7a;
+            --accent: #e67e22;
+            --bg: #f4f7fa;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --border: #dce4ec;
+            --sidebar-width: 260px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --radius: 10px;
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 侧边导航栏 */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, #0a3144 0%, #0b3d5f 100%);
+            color: #ecf0f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2rem 1rem 2rem 1.5rem;
+            z-index: 10;
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+            transition: transform var(--transition);
+        }
+
+        .sidebar h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.6rem;
+        }
+
+        .sidebar .nav-list {
+            list-style: none;
+        }
+
+        .sidebar .nav-list li {
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar .nav-list a {
+            display: block;
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.92rem;
+            transition: all var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar .nav-list a:hover,
+        .sidebar .nav-list a.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border-left-color: var(--accent);
+        }
+
+        .sidebar .nav-list .sub-item {
+            padding-left: 1.8rem;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 2rem 2.5rem;
+            max-width: 1100px;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .header .subtitle {
+            color: #5d6d7e;
+            font-size: 1rem;
+            margin-top: 0.3rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.8rem 2rem;
+            margin-bottom: 1.8rem;
+            border: 1px solid var(--border);
+            transition: box-shadow var(--transition);
+            overflow-x: auto;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            border-left: 5px solid var(--accent);
+            padding-left: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin: 1.4rem 0 0.6rem 0;
+            font-weight: 600;
+        }
+
+        .card h4 {
+            font-weight: 600;
+            margin: 1rem 0 0.4rem;
+            color: #34495e;
+        }
+
+        .card p {
+            margin-bottom: 0.8rem;
+        }
+
+        /* 公式块样式 - MathJax 将生成 SVG 嵌入其中 */
+        .math-block {
+            background: #f8fafc;
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.2rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 1rem;
+        }
+        /* 行内公式与显示公式通用 */
+        .math {
+            overflow-x: auto;
+        }
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.4rem;
+            vertical-align: middle;
+        }
+
+        .mindmap-container {
+            background: #fefefe;
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .mindmap-container h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+        }
+
+        /* 响应式移动端 */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                z-index: 20;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1.2rem;
+            }
+
+            .mobile-nav-toggle {
+                display: block;
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                background: var(--primary);
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 0.5rem 0.8rem;
+                z-index: 30;
+                cursor: pointer;
+                font-size: 1rem;
+            }
+        }
+
+        @media screen and (min-width: 769px) {
+            .mobile-nav-toggle {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 移动端菜单按钮 -->
+    <button class="mobile-nav-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰ 导航</button>
+
+    <!-- 侧边导航栏 -->
+    <nav class="sidebar">
+        <h2>📡 传感器特征分析</h2>
+        <ul class="nav-list">
+            <li><a href="#intro">内涵与目标</a></li>
+            <li><a href="#candidate">目标候选区域确定</a></li>
+            <li><a href="#edge" class="sub-item">边缘检测</a></li>
+            <li><a href="#corner" class="sub-item">角点检测</a></li>
+            <li><a href="#region" class="sub-item">区域分割</a></li>
+            <li><a href="#region_grow" class="sub-item">区域生长/分裂合并</a></li>
+            <li><a href="#superpixel" class="sub-item">超像素方法</a></li>
+            <li><a href="#feature_analysis">目标特征分析</a></li>
+            <li><a href="#separability" class="sub-item">可分性测度</a></li>
+            <li><a href="#intra_class" class="sub-item">类内散布矩阵提取</a></li>
+            <li><a href="#kl_transform">K-L变换</a></li>
+            <li><a href="#pca">主成分分析(PCA)</a></li>
+        </ul>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+        <div class="header">
+            <h1>🌊 传感器特征分析</h1>
+            <div class="subtitle">海洋机器人环境感知 · 第四章核心内容梳理与数学原理</div>
+        </div>
+
+        <!-- 思维导图 -->
+        <div class="mindmap-container">
+            <h2>🧠 知识结构思维导图</h2>
+            <div class="mermaid">
+mindmap
+  root((传感器特征分析))
+    内涵与目标
+    目标候选区域确定
+      基于图像分割
+        孤立点检测
+          Harris角点
+          FAST角点
+          SUSAN角点
+        边缘检测
+          梯度算子
+          Laplacian/Marr
+          Canny算法
+          Hough变换
+        区域分割
+          阈值化分割
+          分水岭分割
+          空间聚类
+      基于区域分析
+        区域生长
+        分裂与合并
+        超像素SLIC
+    目标特征分析方法
+      特征提取 vs 特征选择
+      特征向量相关性
+      类别可分性测度
+        类内距离/散布
+        类间距离/散布
+        多类散布矩阵
+      基于类内散布矩阵降维
+      K-L变换特征提取
+      主成分分析PCA
+            </div>
+        </div>
+
+        <!-- 内涵与目标 -->
+        <section id="intro" class="card">
+            <h2>📌 传感器特征分析的内涵</h2>
+            <p>传感器特征分析是指根据海洋机器人获取的传感器数据，<strong>选择其中感兴趣的部分信息</strong>，分析其特性，通过某种形式描述其关键特性，并评价该表达形式的有效性。其主要目的是从原始传感器数据中提取出能够有效区分不同目标类别的信息，从而为后续分类、识别等任务提供紧凑且判别力强的特征。</p>
+        </section>
+
+        <!-- 目标候选区域的确定 -->
+        <section id="candidate" class="card">
+            <h2>🎯 目标候选区域的确定</h2>
+            <p>目标候选区域的确定是特征分析的前置步骤，旨在从传感器数据（主要是图像）中找出可能包含感兴趣目标的子区域。其主要方法分为<strong>基于图像分割</strong>和<strong>基于区域分析</strong>两大类。</p>
+
+            <h3 id="edge">1. 基于图像分割的方法</h3>
+            <p>基于像素值的<strong>不连续性（边缘）</strong>和<strong>相似性（区域）</strong>，将图像划分为若干具有不同特性的子区域。令集合 \(R\) 代表整个图像区域，分割可表示为：</p>
+            <div class="math-block">\[ R = \bigcup_{i=1}^{N} R_i,\quad R_i \cap R_j = \emptyset \ (i \neq j),\ R_i \text{ 是连通区域。} \]</div>
+
+            <h4 id="corner">🔹 孤立点检测（角点）</h4>
+            <p><strong>Harris 角点检测：</strong>利用窗口移动后灰度变化的自相关矩阵 \(\mathbf{M}\)。对于像素点 \((x,y)\) 和位移 \((\Delta x,\Delta y)\)，灰度变化为：</p>
+            <div class="math-block">\[ E(\Delta x,\Delta y) = \begin{bmatrix} \Delta x & \Delta y \end{bmatrix} \mathbf{M} \begin{bmatrix} \Delta x \\ \Delta y \end{bmatrix} \]</div>
+            <div class="math-block">\[ \mathbf{M} = \sum_{x,y} w(x,y) \begin{bmatrix} I_x^2 & I_x I_y \\ I_x I_y & I_y^2 \end{bmatrix} \]</div>
+            <p>角点响应函数：\(R = \det(\mathbf{M}) - k \cdot \bigl(\operatorname{tr}(\mathbf{M})\bigr)^2\)，参数 \(k\) 通常取 \(0.04 \sim 0.06\)。对 \(R\) 进行非极大值抑制得到最终角点。</p>
+            <p><strong>FAST 角点检测：</strong>若圆周上连续12个点的灰度值与中心点差异超过阈值，则认为是角点。速度快，常用于实时系统。</p>
+            <p><strong>SUSAN 角点检测：</strong>根据模板内与中心点“同质”的像素比例判断。平坦区同质比例高，边缘区 \(>1/2\)，角点区 \(<1/2\)。</p>
+
+            <h4>🔹 边缘检测</h4>
+            <p>边缘是图像中灰度发生剧烈变化的位置。常用算子基于一阶或二阶导数。</p>
+            <p><strong>梯度算子：</strong>梯度定义为 \(\nabla f = \left[ \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y} \right]^{\mathsf{T}}\)，幅值为 \(|\nabla f| = \sqrt{f_x^2+f_y^2}\)，方向 \(\theta = \operatorname{atan2}(f_y, f_x)\)。常用 Sobel、Prewitt 等模板。</p>
+            <p><strong>Laplacian 算子：</strong>二阶导数 \(\nabla^2 f = \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2}\)，对噪声敏感。常与高斯平滑结合构成 <strong>LoG (Marr) 算子</strong>：\(\nabla^2 [G_{\sigma} * f] = (\nabla^2 G_{\sigma}) * f\)，其中 \(G_{\sigma}\) 为高斯核。</p>
+            <p><strong>Canny 边缘检测：</strong>经典流程：① 高斯平滑；② 计算梯度幅值和方向；③ 非极大值抑制细化边缘；④ 双阈值检测和滞后连接边缘。</p>
+            <p><strong>Hough 变换：</strong>将图像空间中的点映射到参数空间，检测直线、圆等几何形状。直线检测使用极坐标 \(\rho = x \cos\theta + y \sin\theta\)，统计参数空间峰值。</p>
+
+            <h4 id="region">🔹 区域分割</h4>
+            <p><strong>阈值化分割：</strong>通过一个或多个阈值将像素分为不同类。Otsu 方法通过最大化类间方差自动选取全局阈值，类间方差定义为：</p>
+            <div class="math-block">\[ \sigma_B^2(k) = \omega_0 (\mu_0 - \mu_T)^2 + \omega_1 (\mu_1 - \mu_T)^2 \]</div>
+            <p><strong>分水岭分割：</strong>将灰度图像视为地形表面，通过模拟浸水过程找到分水线，适合粘连物体分割。</p>
+            <p><strong>空间聚类分割：</strong>如 \(K\)-均值、模糊 \(C\)-均值，依据像素特征（颜色、坐标）聚类。</p>
+
+            <h3 id="region_grow">2. 基于区域分析的方法</h3>
+            <p><strong>区域生长：</strong>选取种子点，按相似性准则将邻域像素合并到区域中，直至无新像素加入。</p>
+            <p><strong>区域分裂与合并：</strong>利用四叉树结构，初始将整个图像视为一个区域，若不满足均匀性准则则分裂为四份；相邻区域若满足合并准则则合并。</p>
+
+            <h3 id="superpixel">3. 超像素方法 (SLIC)</h3>
+            <p>SLIC 在 CIE LAB 颜色空间结合空间坐标聚类，距离度量融合颜色距离 \(d_c\) 和空间距离 \(d_s\)：</p>
+            <div class="math-block">\[ D = \sqrt{d_c^2 + \left( \frac{d_s}{S} \right)^2 \cdot m^2 } \]</div>
+            <p>其中 \(S = \sqrt{N/K}\) 为网格间距，\(m\) 控制紧凑度。迭代优化聚类中心，生成大小均匀、边界保持的超像素。</p>
+        </section>
+
+        <!-- 目标特征分析方法 -->
+        <section id="feature_analysis" class="card">
+            <h2>📊 目标特征分析方法</h2>
+            <p>对候选区域提取的特征应具有：<strong>高辨识力、可靠性、独立性、维度低</strong>。特征提取通过数学变换获得新特征（如投影），特征选择则从原始集合中挑选子集。两者都旨在降维并保留分类信息。</p>
+
+            <h3>特征向量的相关性</h3>
+            <p>两个特征向量 \(\mathbf{x}\) 和 \(\mathbf{y}\) 的点积、夹角余弦、投影及残差向量可用于度量模式相似性：</p>
+            <div class="math-block">\[ \cos\theta = \frac{\mathbf{x}^{\mathsf{T}} \mathbf{y}}{\|\mathbf{x}\| \cdot \|\mathbf{y}\|} \]</div>
+
+            <h3 id="separability">类别可分性测度</h3>
+            <p><strong>类内距离：</strong>同一类样本间的均方距离，与协方差矩阵的迹相关：\(\bar{D}^2 = 2\,\operatorname{tr}(\mathbf{C})\)。</p>
+            <p><strong>类内散布矩阵：</strong>\[ \mathbf{S}_w = \sum_{i} P(\omega_i) \, \mathbb{E}\left[ (\mathbf{X} - \mathbf{M}_i)(\mathbf{X} - \mathbf{M}_i)^{\mathsf{T}} \right] \] 希望其迹越小越好。</p>
+            <p><strong>类间散布矩阵：</strong>\[ \mathbf{S}_b = \sum_{i} P(\omega_i) (\mathbf{M}_i - \mathbf{M}_0)(\mathbf{M}_i - \mathbf{M}_0)^{\mathsf{T}} \] 迹越大越利于分类。</p>
+            <p><strong>总体散布矩阵：</strong>\(\mathbf{S}_t = \mathbf{S}_b + \mathbf{S}_w\)。多类平均平方距离 \(J_d = \operatorname{tr}(\mathbf{S}_t)\)。</p>
+
+            <h3 id="intra_class">基于类内散布矩阵的特征提取</h3>
+            <p>对一类样本，用类内协方差矩阵 \(\mathbf{C}\) 的特征向量构成正交变换矩阵 \(\mathbf{A}\)，使得变换后的协方差矩阵为对角阵，各分量互不相关。选择较小特征值对应的特征向量可保留聚集性好的分量，减小类内距离。</p>
+
+            <h3 id="kl_transform">K-L 变换（Karhunen-Loève）</h3>
+            <p>用自相关矩阵 \(\mathbf{R}\) 的特征向量作为正交基，将信号展开。取前 \(d\) 个最大特征值对应的特征向量构成变换矩阵 \(\mathbf{U}\)，则截断均方误差为剩余特征值之和。K-L 变换是均方误差意义下的最优降维变换。当采用不同散布矩阵（\(\mathbf{S}_w, \mathbf{S}_b, \mathbf{S}_t\)）时，可突出不同方面的类别信息。</p>
+            <div class="math-block">\[ \mathbf{Y} = \mathbf{U}^{\mathsf{T}} (\mathbf{X} - \boldsymbol{\mu}) \]</div>
+
+            <h3 id="pca">主成分分析 (PCA)</h3>
+            <p>PCA 与 K-L 变换数学本质一致，核心是寻找一组正交基，使得投影后方差最大。步骤：① 计算协方差矩阵；② 特征值分解；③ 按特征值降序排列，取前 \(m\) 个特征向量；④ 投影降维。重建误差期望为舍弃特征值之和，保证了信息损失最小。</p>
+            <div class="math-block">\[ \boldsymbol{\Sigma} = \boldsymbol{\Phi} \boldsymbol{\Lambda} \boldsymbol{\Phi}^{\mathsf{T}}, \quad \mathbf{Y} = \boldsymbol{\Phi}_m^{\mathsf{T}} (\mathbf{X} - \boldsymbol{\mu}) \]</div>
+            <p>PCA 可消除特征间相关性，降低过拟合风险，是海洋机器人视觉中常用的预处理手段。</p>
+        </section>
+
+
+        <footer style="text-align:center; margin-top:2rem; color:#7f8c8d; font-size:0.9rem;">
+            <p>📘 海洋机器人环境感知 · 第四章传感器特征分析 </p>
+        </footer>
+    </main>
+
+    <script>
+        // 初始化 Mermaid (延迟确保 MathJax 先加载基本结构，无冲突)
+        window.addEventListener('load', function() {
+            if (typeof mermaid !== 'undefined') {
+                mermaid.initialize({
+                    startOnLoad: true,
+                    theme: 'default',
+                    mindmap: {
+                        useMaxWidth: true,
+                        padding: 20
+                    }
+                });
+                // 重新渲染以防与 MathJax 异步冲突
+                try { mermaid.contentLoaded(); } catch(e) { console.warn("mermaid refresh", e); }
+            }
+        });
+
+        // 导航激活状态高亮
+        const navLinks = document.querySelectorAll('.sidebar a');
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        // 移动端关闭侧边栏点击链接后自动关闭
+        if (window.innerWidth <= 768) {
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    document.querySelector('.sidebar').classList.remove('open');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
